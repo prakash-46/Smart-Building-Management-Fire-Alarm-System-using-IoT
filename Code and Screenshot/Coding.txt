@@ -1,0 +1,55 @@
+#include <LiquidCrystal.h>
+
+const int irSensorPin = 2;
+
+const int thresholdValue = 800;
+
+LiquidCrystal lcd(8, 9, 4, 5, 6, 7);
+
+const int speakerPin = 10;
+
+void setup() {
+
+  lcd.begin(16, 2);
+
+  pinMode(irSensorPin, INPUT);
+  pinMode(speakerPin, OUTPUT);
+
+  lcd.clear();
+
+  lcd.setCursor(0, 0);
+
+  //lcd.print("Fire Detection");
+
+}
+
+void loop() {
+
+  int irValue = analogRead(irSensorPin);
+
+  if (irValue < thresholdValue) {
+
+    lcd.clear();
+
+    lcd.setCursor(0, 0);
+
+    lcd.print("Fire detected");
+
+    tone(speakerPin, 1000);
+
+
+  } else {
+
+    lcd.clear();
+
+    lcd.setCursor(0, 0);
+
+    lcd.print("Standby");
+
+    noTone(speakerPin);
+
+  }
+
+  delay(1000);
+
+}
